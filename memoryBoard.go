@@ -167,7 +167,7 @@ func checkIfMatch() {
 	initMatcher()
 }
 
-func getColorCode(c int) color.Color {
+func getColorCode(c int) color.NRGBA {
 	switch c {
 	case 0:
 		return color.NRGBA{255, 0, 0, 0xff}
@@ -211,14 +211,14 @@ func MG_Draw(screen *ebiten.Image) {
 		opts.GeoM.Reset()
 		opts.GeoM.Scale(1.0, 1.0)
 		opts.GeoM.Translate(x, y)
+		opts.ColorM.Reset()
 		if cardArr[i].clicked {
-			frontCardImage.Fill(getColorCode(cardArr[i].colorCode))
+			c := getColorCode(cardArr[i].colorCode)
+			opts.ColorM.Scale(float64(c.R) / 255, float64(c.G) / 255, float64(c.B) / 255, float64(c.A) / 255)
 			screen.DrawImage(frontCardImage, opts)
 		} else {
 			screen.DrawImage(cardRectImage, opts)
-
 		}
-
 	}
 
 	if !timerLockShowAll {
@@ -338,8 +338,7 @@ func MG_Init() {
 		// Create an w x h image
 		frontCardImage, _ = ebiten.NewImage(oneWidth, oneHeight, ebiten.FilterNearest)
 	}
-	green := color.NRGBA{0, 128, 0, 0xff}
-	frontCardImage.Fill(green)
+	frontCardImage.Fill(color.White)
 
 	show_all()
 	frameCount = 0
