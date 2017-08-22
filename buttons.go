@@ -19,6 +19,7 @@ import (
     "log"
     "fmt"
     "image/color"
+    "path/filepath"
     "github.com/hajimehoshi/ebiten"
     "github.com/hajimehoshi/ebiten/ebitenutil"
 )
@@ -84,7 +85,7 @@ func Button_Create( n string,
     
     var err error
     var fname string
-    fname = fmt.Sprintf("data\\%s", n)
+	fname = filepath.Join("data", n)
 	img, _, err := ebitenutil.NewImageFromFile(
         fname, 
         ebiten.FilterNearest)
