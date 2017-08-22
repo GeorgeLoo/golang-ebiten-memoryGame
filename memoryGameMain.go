@@ -17,6 +17,7 @@ import (
     "fmt"
     "log"
     "os"
+    "path/filepath"
     "image"
     "image/color"
     "github.com/hajimehoshi/ebiten"
@@ -61,7 +62,7 @@ func soundinit() {
         log.Fatal(err)
     }
 
-    f, err := os.Open("data\\jab.wav")
+    f, err := os.Open(filepath.Join("data", "jab.wav"))
     if err != nil {
         log.Fatal(err)
     }
@@ -271,7 +272,7 @@ func runOnce() {
     
     var err error
     var fname string
-    fname = fmt.Sprintf("data\\digits.png")
+	fname = filepath.Join("data", "digits.png")
 	digitsImage, _, err = ebitenutil.NewImageFromFile(
         fname, 
         ebiten.FilterNearest)
